@@ -1,22 +1,16 @@
 import cv2 as cv
-import numpy as np
+import time
 
-def test():
-    vid = cv.VideoCapture("abc.mp4")
+def from_file(path, filter, delayBetweenFrames):
+    vid = cv.VideoCapture(path)
     if (vid.isOpened() == False): 
         print("Error opening video stream or file")
     
     while(vid.isOpened()):
         ret, frame = vid.read()
+        filtered_frame = filter(frame)
 
-        kernel = [
-            [-1, -1, -1],
-            [-1,  8, -1],
-            [-1, -1, -1],
-        ]
-        kernel = np.asarray(kernel)
-        filtered_frame = cv.filter2D(frame, -1, kernel=kernel)
-
+        time.sleep(delayBetweenFrames)
         if ret == True:
             cv.imshow('Frame', filtered_frame)
             

@@ -10,7 +10,7 @@ def from_file(path, filter, delayBetweenFrames):
         ret, frame = vid.read()
         filtered_frame = filter(frame)
 
-        time.sleep(delayBetweenFrames)
+        # time.sleep(delayBetweenFrames)
         if ret == True:
             cv.imshow('Frame', filtered_frame)
             

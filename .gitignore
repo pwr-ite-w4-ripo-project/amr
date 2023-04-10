@@ -1,6 +1,9 @@
 .vscode
+models/
+variables/
 *.mp4
 *.png
+*.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

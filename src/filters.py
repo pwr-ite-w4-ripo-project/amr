@@ -16,7 +16,7 @@ labels = labels['OBJECT (2017 REL.)']
 
 def test_filter(image):
     # return cv.filter2D(image, -1, kernel=np.asarray(kernel))
-    rgb = cv.cvtColor(image, cv.COLOR_BGR2RGB)
+    rgb = image #cv.cvtColor(image, cv.COLOR_BGR2RGB)
     rgb_tensor = tf.convert_to_tensor(rgb, dtype=tf.uint8)
     rgb_tensor = tf.expand_dims(rgb_tensor , 0)
     
@@ -25,6 +25,7 @@ def test_filter(image):
 
     # Processing outputs
     pred_labels = classes.numpy().astype('int')[0] 
+    print(classes)
     pred_labels = [labels[i] for i in pred_labels]
     pred_boxes = boxes.numpy()[0].astype('int')
     pred_scores = scores.numpy()[0]
@@ -38,10 +39,11 @@ def test_filter(image):
             continue
 
         score_txt = f'{100 * round(score)}%'
-        img_boxes = cv.rectangle(rgb, (xmin, ymax),(xmax, ymin),(0,255,0),2)      
+        boxes = cv.rectangle(rgb, (xmin, ymax),(xmax, ymin),(0,255,0),2)      
         font = cv.FONT_HERSHEY_SIMPLEX
-        cv.putText(img_boxes, label,(xmin, ymax-10), font, 1.5, (255,0,0), 2, cv.LINE_AA)
-        cv.putText(img_boxes,score_txt,(xmax, ymax-10), font, 1.5, (255,0,0), 2, cv.LINE_AA)
-        # cv.addWeighted(image, 0.5, img_boxes, 0.5, 0.5)
+        cv.putText(boxes, label,(xmin, ymax-10), font, 1.5, (255,0,0), 2, cv.LINE_AA)
+        cv.putText(boxes,score_txt,(xmax, ymax-10), font, 1.5, (255,0,0), 2, cv.LINE_AA)
+        # cv.addWeighted(image, 0.5, boxes, 0.5, 0.5)
         # add on frame 
-        return img_boxes
+        # return img_boxes
+    return boxes

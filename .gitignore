@@ -4,6 +4,8 @@ variables/
 *.mp4
 *.png
 *.csv
+abc/*
+*/*.png
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

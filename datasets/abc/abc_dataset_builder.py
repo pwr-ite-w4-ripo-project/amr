@@ -17,7 +17,7 @@ class Builder(tfds.core.GeneratorBasedBuilder):
 
     return self.dataset_info_from_configs(
         features=tfds.features.FeaturesDict({
-            'image': tfds.features.Image(shape=(1080, 1920, 3)),
+            'image': tfds.features.Image(shape=(128, 128, 3)),
             'label': tfds.features.ClassLabel(names=['box', 'person', 'unknown']),
         }),
         supervised_keys=('image', 'label'),  # Set to `None` to disable

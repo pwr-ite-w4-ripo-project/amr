@@ -17,10 +17,10 @@ class Builder(tfds.core.GeneratorBasedBuilder):
 
     return self.dataset_info_from_configs(
         features=tfds.features.FeaturesDict({
-            'image': tfds.features.Image(shape=(128, 128, 3)),
+            'input_1': tfds.features.Image(shape=(128, 128, 3)),
             'label': tfds.features.ClassLabel(names=['box', 'person', 'unknown']),
         }),
-        supervised_keys=('image', 'label'),  # Set to `None` to disable
+        supervised_keys=('input_1', 'label'),  # Set to `None` to disable
         homepage='https://dataset-homepage/',
     )
 
@@ -42,6 +42,6 @@ class Builder(tfds.core.GeneratorBasedBuilder):
             filePath = "{subpath}/{file}".format(subpath=subpath, file=file)
 
             yield filePath, {
-                'image': cv.cvtColor(cv.imread(filePath), cv.COLOR_BGR2RGB),
+                'input_1': cv.cvtColor(cv.imread(filePath), cv.COLOR_BGR2RGB),
                 'label': subdir,
             }

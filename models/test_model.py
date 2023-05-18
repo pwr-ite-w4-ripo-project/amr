@@ -14,7 +14,7 @@ dataset = tf.keras.utils.image_dataset_from_directory(
 model = tf.keras.Sequential([
     tf.keras.layers.Flatten(input_shape=(128, 128, 3)),
     tf.keras.layers.Dense(128, activation=tf.nn.relu),
-    tf.keras.layers.Dense(len(classes), activation=tf.nn.softmax)
+    tf.keras.layers.Dense(len(classes), activation=tf.nn.softmax),
 ])
 
 def train_model():

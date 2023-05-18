@@ -1,0 +1,34 @@
+[
+  {
+    "annotations": [
+      {
+        "coordinates": {
+          "height": 81.0,
+          "width": 172.0,
+          "x": 988.0,
+          "y": 509.5
+        },
+        "label": "box"
+      },
+      {
+        "coordinates": {
+          "height": 90.0,
+          "width": 200.0,
+          "x": 1189.0,
+          "y": 502.0
+        },
+        "label": "box"
+      },
+      {
+        "coordinates": {
+          "height": 78.0,
+          "width": 160.0,
+          "x": 1372.0,
+          "y": 505.0
+        },
+        "label": "box"
+      }
+    ],
+    "image": "xd-1.png"
+  }
+]

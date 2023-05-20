@@ -10,14 +10,17 @@ import pandas as pd
 #     [-1, -1, -1],
 # ]
 
-detector = hub.load("https://tfhub.dev/tensorflow/efficientdet/lite2/detection/1")
-labels = pd.read_csv('labels.csv', sep=';', index_col='ID')
-labels = labels['OBJECT (2017 REL.)']
+# detector = hub.load("https://tfhub.dev/tensorflow/efficientdet/lite2/detection/1")
+# labels = pd.read_csv('labels.csv', sep=';', index_col='ID')
+# labels = labels['OBJECT (2017 REL.)']
+
+detector = hub.load("models/detector")
+labels = ["person", "box"]
 
 def test_filter(image):
     # return cv.filter2D(image, -1, kernel=np.asarray(kernel))
     rgb = image #cv.cvtColor(image, cv.COLOR_BGR2RGB)
-    rgb_tensor = tf.convert_to_tensor(rgb, dtype=tf.uint8)
+    rgb_tensor = tf.convert_to_tensor(rgb, dtype=tf.uint8) #dtype float32
     rgb_tensor = tf.expand_dims(rgb_tensor , 0)
     
     # Creating prediction
@@ -25,7 +28,6 @@ def test_filter(image):
 
     # Processing outputs
     pred_labels = classes.numpy().astype('int')[0] 
-    print(classes)
     pred_labels = [labels[i] for i in pred_labels]
     pred_boxes = boxes.numpy()[0].astype('int')
     pred_scores = scores.numpy()[0]

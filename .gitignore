@@ -5,6 +5,8 @@ variables/
 *.csv
 abc/*
 */*.png
+amr_dataset/*
+dataset/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

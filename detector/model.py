@@ -19,10 +19,10 @@ base_layers = tf.keras.layers.Conv2D(64, 3, padding='same', activation='relu')(b
 base_layers = tf.keras.layers.MaxPooling2D()(base_layers)
 flatten = tf.keras.layers.Flatten()(base_layers)
 
-## bounding boxs input
+## bounding boxes input
 bboxHead = tf.keras.layers.Dense(128, activation="relu")(flatten)
-# bboxHead = tf.keras.layers.Dense(64, activation="relu")(bboxHead)
-# bboxHead = tf.keras.layers.Dense(32, activation="relu")(bboxHead)
+bboxHead = tf.keras.layers.Dense(64, activation="relu")(bboxHead)
+bboxHead = tf.keras.layers.Dense(32, activation="relu")(bboxHead)
 bboxHead = tf.keras.layers.Dense(4, activation="sigmoid", name="bounding_box")(bboxHead)
 
 ## class labels input
@@ -49,7 +49,7 @@ paths = []
 #     lines = open(f"dataset/labels/{file}")
 
 #     path = f"dataset/images/{filename}"
-#     image = tf.keras.preprocessing.image.load_img(path, target_size=(224, 224))
+#     image = tf.keras.preprocessing.image.load_img(path, target_size=(216, 216))
 #     image_as_arr = tf.keras.preprocessing.image.img_to_array(image)
 #     data.append(np.array(image, dtype="float32") / 255.0)
 #     paths.append(path)
@@ -63,7 +63,14 @@ paths = []
 #         (label, x, y, width, height) = line.strip().split(" ")
         
 #         image_labels.append(int(label))
-#         bboxes.append(np.array([float(x), float(y), float(x) + float(width), float(y) + float(height)], dtype="float32"))
+#         bboxes.append(
+#             np.array([
+#                 round(float(x), 2), 
+#                 round(float(y), 2), 
+#                 round(float(x) + float(width), 2), 
+#                 round(float(y) + float(height), 2)
+#             ], dtype="float32")
+#         )
 
 #     # bboxes.append(image_bboxes)
 #     labels.append(image_labels)

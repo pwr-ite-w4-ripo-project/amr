@@ -5,7 +5,8 @@ import cv2 as cv
 import tensorflow_hub as hub
 import tensorflow as tf
 
-image1 = cv.cvtColor(cv.imread("dataset/images/00039143.png"), cv.COLOR_BGR2RGB) 
+image1 = cv.imread("dataset/images/00019800.png")#), cv.COLOR_BGR2RGB) 
+# image1 = cv.imread("dataset/images/00033554.png")#), cv.COLOR_BGR2RGB) 
 image2 = cv.resize(image1, (216, 216))
 
 detector = hub.load("models/detector7")

@@ -5,11 +5,12 @@ import cv2 as cv
 import tensorflow_hub as hub
 import tensorflow as tf
 
-image1 = cv.cvtColor(cv.imread("dataset/images/00012112.png"), cv.COLOR_BGR2RGB) 
-image1 = cv.resize(image1, (224, 224))
+image1 = cv.cvtColor(cv.imread("dataset/images/00039143.png"), cv.COLOR_BGR2RGB) 
+image2 = cv.resize(image1, (216, 216))
 
-detector = hub.load("models/detector")
+detector = hub.load("models/detector7")
 labels = ["person", "box"]
+(x, y, width, height) = (0.142708, 0.385185, 0.24375, 0.459259)
 
 def main():
     # from_file("abc.mp4", test_filter, 0.025)
@@ -21,29 +22,27 @@ def main():
     
     # Creating prediction
     # xx = detector.
-    rgb_tensor = tf.convert_to_tensor(image1, dtype=tf.float32)
+    rgb_tensor = tf.convert_to_tensor(image2, dtype=tf.float32)
     rgb_tensor = tf.expand_dims(rgb_tensor , 0)
 
-
-
-    # result = test_filter(image1)
+    # print(image1.shape)
+    # print(int(x * 1920), int(y * 1080))
+    # print(int(x + width) * 1920, int(y + height) * 1080)
+    # print(int((x + width) * 1920), int((y + height) * 1080))
+    # # result = test_filter(image1)
     boxes, scores = detector(rgb_tensor)
-    print(boxes[0])
+    print(boxes)
     print(scores)
 
+    # image3 = cv.rectangle(image1, pt1=(int(boxes[0][0] * 1920), int(boxes[0][1] * 1080)), pt2=(int((boxes[0][0] + boxes[0][2]) * 1920), int((boxes[0][1] + boxes[0][3]) * 1080)),color=(0,255,0), thickness=2) 
+    image3 = cv.rectangle(image1, pt1=(int(boxes[0][0] * 1920), int(boxes[0][1] * 1080)), pt2=(int(boxes[0][2] * 1920), int(boxes[0][3] * 1080)),color=(0,255,0), thickness=2) 
 
-    return
+    # return
     while True:
-      cv.imshow("xd", image1)
+      cv.imshow("xd", image3)
       if cv.waitKey(25) & 0xFF == ord('q'):
           break
     # print(xx)
-    
-    # testowanie zdj:
-    # pred_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
-    # predictions = pred_model.predict(image2[None, :])
-    # print(predictions[0])
-    
     
 
 if __name__ == "__main__":

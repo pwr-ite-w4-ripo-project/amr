@@ -43,42 +43,11 @@ labels = []
 bboxes = []
 paths = []
 
-# files = os.listdir("dataset/labels")
-# for file in files:
-#     filename = file.replace("txt", "png")
-#     lines = open(f"dataset/labels/{file}")
-
-#     path = f"dataset/images/{filename}"
-#     image = tf.keras.preprocessing.image.load_img(path, target_size=(216, 216))
-#     image_as_arr = tf.keras.preprocessing.image.img_to_array(image)
-#     data.append(np.array(image, dtype="float32") / 255.0)
-#     paths.append(path)
-
-#     image_bboxes = []
-#     image_labels = []
-#     for line in lines:
-#         if (len(line) < 2):
-#             continue
-
-#         (label, x, y, width, height) = line.strip().split(" ")
-        
-#         image_labels.append(int(label))
-#         bboxes.append(
-#             np.array([
-#                 round(float(x), 2), 
-#                 round(float(y), 2), 
-#                 round(float(x) + float(width), 2), 
-#                 round(float(y) + float(height), 2)
-#             ], dtype="float32")
-#         )
-
-#     # bboxes.append(image_bboxes)
-#     labels.append(image_labels)
-
 lines = open("dataset/labels.txt")
 for line in lines:
     (filename, label, x, y, width, height) = line.strip().split(" ")
 
+    # exclude boxes for now
     if (label == 1 or label == "1"):
         continue
 
@@ -86,15 +55,21 @@ for line in lines:
     image = tf.keras.preprocessing.image.load_img(path, target_size=(216, 216))
     image_as_arr = tf.keras.preprocessing.image.img_to_array(image)
     
-    data.append(np.array(image, dtype="float32") / 255.0)
+    data.append(np.array(image, dtype="int32"))
     labels.append(int(label))
+
+    x1 = round(float(x) - float(width)/2, 2) 
+    y1 = round(float(y) - float(height)/2, 2) 
+    x2 = round(float(x) + float(width)/2, 2) 
+    y2 = round(float(y) + float(height)/2, 2)
+
     bboxes.append((
-        round(float(x), 2), 
-        round(float(y), 2), 
-        round(float(x) + float(width), 2), 
-        round(float(y) + float(height), 2)
+        abs(x1), 
+        abs(y1), 
+        x2, 
+        y2
     ))
-    # print(bboxes[len(bboxes) - 1])
+
     paths.append(path)
 
 data = np.array(data)
@@ -152,4 +127,4 @@ model.fit(
 	epochs=20,
 	verbose=1
 )
-model.save("models/detector7")
+model.save("models/detector2")

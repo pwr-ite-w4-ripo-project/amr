@@ -5,13 +5,13 @@ import cv2 as cv
 import tensorflow_hub as hub
 import tensorflow as tf
 
-image1 = cv.imread("dataset/images/00019800.png")#), cv.COLOR_BGR2RGB) 
+image1 = cv.imread("dataset/images/00039143.png")#), cv.COLOR_BGR2RGB) 
 # image1 = cv.imread("dataset/images/00033554.png")#), cv.COLOR_BGR2RGB) 
 image2 = cv.resize(image1, (216, 216))
 
-detector = hub.load("models/detector7")
+detector = hub.load("models/detector")
 labels = ["person", "box"]
-(x, y, width, height) = (0.142708, 0.385185, 0.24375, 0.459259)
+# (x, y, width, height) = (0.142708, 0.385185, 0.24375, 0.459259)
 
 def main():
     # from_file("abc.mp4", test_filter, 0.025)
@@ -23,19 +23,16 @@ def main():
     
     # Creating prediction
     # xx = detector.
+    print(image1)
     rgb_tensor = tf.convert_to_tensor(image2, dtype=tf.float32)
     rgb_tensor = tf.expand_dims(rgb_tensor , 0)
 
-    # print(image1.shape)
-    # print(int(x * 1920), int(y * 1080))
-    # print(int(x + width) * 1920, int(y + height) * 1080)
-    # print(int((x + width) * 1920), int((y + height) * 1080))
-    # # result = test_filter(image1)
     boxes, scores = detector(rgb_tensor)
     print(boxes)
     print(scores)
 
-    # image3 = cv.rectangle(image1, pt1=(int(boxes[0][0] * 1920), int(boxes[0][1] * 1080)), pt2=(int((boxes[0][0] + boxes[0][2]) * 1920), int((boxes[0][1] + boxes[0][3]) * 1080)),color=(0,255,0), thickness=2) 
+    # image3 = cv.rectangle(image1, pt1=(int((x - width/2) * 1920), int((y - height/2) * 1080)), pt2=(int((x + width/2) * 1920), int((y + height/2) * 1080)),color=(0,255,0), thickness=2) 
+    # image3 = cv.rectangle(image1, pt1=(int(boxes[0][0] * 1920), int(boxes[0][1] * 1080)), pt2=(int((boxes[0][0] + boxes[0][2]) * 1920), int((boxes[0][3]) * 1080)),color=(0,255,0), thickness=2) 
     image3 = cv.rectangle(image1, pt1=(int(boxes[0][0] * 1920), int(boxes[0][1] * 1080)), pt2=(int(boxes[0][2] * 1920), int(boxes[0][3] * 1080)),color=(0,255,0), thickness=2) 
 
     # return

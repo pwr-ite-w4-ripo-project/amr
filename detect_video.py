@@ -1,5 +1,6 @@
 import torch
 import cv2
+import sys
 
 from models.common import DetectMultiBackend
 from utils.dataloaders import LoadImages
@@ -50,4 +51,4 @@ def run(
 
 
 if __name__ == '__main__':
-    run(weights='model.pt', source='10_czlowiek_karton.mp4', confidence_thres=0.25)
+    run(weights=sys.argv[1], source=sys.argv[2], confidence_thres=0.25)
